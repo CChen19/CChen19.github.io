@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="学习任何一门课程都要善于抓住主要矛盾、分清主次、突出重点。关键是掌握知识框架，学会以后真正有用的知识和技能，而不要把精力平均分配在一些琐事上。 请允许我再次引用孟岩的观点：https:&#x2F;&#x2F;blog.csdn.net&#x2F;myan&#x2F;article&#x2F;details&#x2F;5877305 我（孟岩）主张，在具备基础之后，学习任何新东西，都要抓住主线，突出重点。对于关键理论的学习，要集中精力，速战速决。而旁枝末节和">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux C++ 服务器端这条线怎么走（二）">
+<meta property="og:url" content="http://example.com/2022/07/27/Linux%20C++%20%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E8%BF%99%E6%9D%A1%E7%BA%BF%E6%80%8E%E4%B9%88%E8%B5%B0%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
+<meta property="og:site_name" content="陈庆宇">
+<meta property="og:description" content="学习任何一门课程都要善于抓住主要矛盾、分清主次、突出重点。关键是掌握知识框架，学会以后真正有用的知识和技能，而不要把精力平均分配在一些琐事上。 请允许我再次引用孟岩的观点：https:&#x2F;&#x2F;blog.csdn.net&#x2F;myan&#x2F;article&#x2F;details&#x2F;5877305 我（孟岩）主张，在具备基础之后，学习任何新东西，都要抓住主线，突出重点。对于关键理论的学习，要集中精力，速战速决。而旁枝末节和">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-07-27T05:21:11.000Z">
+<meta property="article:modified_time" content="2023-05-11T03:35:49.433Z">
+<meta property="article:author" content="Chen Chris">
+<meta property="article:tag" content="Unix网络编程">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2022/07/27/Linux%20C++%20%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E8%BF%99%E6%9D%A1%E7%BA%BF%E6%80%8E%E4%B9%88%E8%B5%B0%EF%BC%88%E4%BA%8C%EF%BC%89/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/07/27/Linux%20C++%20%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E8%BF%99%E6%9D%A1%E7%BA%BF%E6%80%8E%E4%B9%88%E8%B5%B0%EF%BC%88%E4%BA%8C%EF%BC%89/","path":"2022/07/27/Linux C++ 服务器端这条线怎么走（二）/","title":"Linux C++ 服务器端这条线怎么走（二）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Linux C++ 服务器端这条线怎么走（二） | 陈庆宇</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">陈庆宇</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E5%88%86%E6%B8%85%E7%9F%A5%E8%AF%86%E7%9A%84%E5%B1%82%E6%AC%A1"><span class="nav-number">1.</span> <span class="nav-text">注意分清知识的层次</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E8%AF%86%E5%88%AB%E8%BF%87%E6%97%B6%E7%9A%84%E7%9F%A5%E8%AF%86"><span class="nav-number">2.</span> <span class="nav-text">注意识别过时的知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E6%9E%9C%E4%BD%A0%E8%A6%81%E8%AE%B0%E4%BD%8F%E7%BB%93%E8%AE%BA%EF%BC%8C%E4%B8%80%E5%AE%9A%E8%A6%81%E5%90%8C%E6%97%B6%E8%AE%B0%E4%BD%8F%E5%89%8D%E6%8F%90%E5%92%8C%E9%80%82%E7%94%A8%E6%9D%A1%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">如果你要记住结论，一定要同时记住前提和适用条件</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chen Chris</p>
+  <div class="site-description" itemprop="description">Set the value of description to your description, which can be a sentence you like.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/27/Linux%20C++%20%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E8%BF%99%E6%9D%A1%E7%BA%BF%E6%80%8E%E4%B9%88%E8%B5%B0%EF%BC%88%E4%BA%8C%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chen Chris">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈庆宇">
+      <meta itemprop="description" content="Set the value of description to your description, which can be a sentence you like.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Linux C++ 服务器端这条线怎么走（二） | 陈庆宇">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux C++ 服务器端这条线怎么走（二）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-07-27 13:21:11" itemprop="dateCreated datePublished" datetime="2022-07-27T13:21:11+08:00">2022-07-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-05-11 11:35:49" itemprop="dateModified" datetime="2023-05-11T11:35:49+08:00">2023-05-11</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><strong>学习任何一门课程都要善于抓住主要矛盾、分清主次、突出重点。</strong>关键是掌握知识框架，学会以后真正有用的知识和技能，而不要把精力平均分配在一些琐事上。</p>
+<p>请允许我再次引用孟岩的观点：<a target="_blank" rel="noopener" href="https://blog.csdn.net/myan/article/details/5877305">https://blog.csdn.net/myan/article/details/5877305</a></p>
+<p>我（孟岩）主张，在具备基础之后，学习任何新东西，都要<strong>抓住主线，突出重点</strong>。对于关键理论的学习，要集中精力，速战速决。而旁枝末节和非本质性的知识内容，完全可以留给实践去零敲碎打。</p>
+<span id="more"></span>
+
+<p>原因是这样的，任何一个高级的知识内容，其中都只有一小部分是有思想创新、有重大影响的，而其它很多东西都是琐碎的、非本质的。因此，集中学习时必须把握住真正重要那部分，把其它东西留给实践。对于重点知识，只有集中学习其理论，才能确保体系性、连贯性、正确性，而对于那些旁枝末节，只有边干边学能够让你了解它们的真实价值是大是小，才能让你留下更生动的印象。如果你把精力用错了地方，比如用集中大块的时间来学习那些本来只需要查查手册就可以明白的小技巧，而对于真正重要的、思想性东西放在平时零敲碎打，那么肯定是事倍功半，甚至适得其反。</p>
+<p>因此我对于市面上绝大部分开发类图书都不满——它们基本上都是面向知识体系本身的，而不是面向读者的。总是把相关的所有知识细节都放在一堆，然后一堆一堆攒起来变成一本书。反映在内容上，就是毫无重点地平铺直叙，不分轻重地陈述细节，往往在第三章以前就用无聊的细节谋杀了读者的热情。</p>
+<p>比如说操作系统，应该把精力主要放在进程管理与调度、内存管理、并发编程与同步、高效的IO等等，而不要过于投入到初始化（从 BIOS 加载引导扇区、设置 GDT、进入保护模式）这种一次性任务上。我发现国内讲 Linux 内核的书往往把初始化的细节放在前几章，而国外的书通常放附录，你可以体会一下。初始化对操作系统本身而言当然是重要的，但是对于在用户态写服务程序的人来说，弄清楚为什么要打开 PC 上的 A20 地址线真的有用处吗？（这不过是个历史包袱罢了。）</p>
+<p>再比方说《计算机网络》，关键之一是理解如何在底层有丢包、重包、乱序的条件下设计出可靠的网络协议，这不算难。难一点的是这个可靠协议能达到“既能充分利用带宽，又能做到足够公平（并发连接大致平均分享带宽）”。而不是学会手算 CRC32，这更适合放到信息论或别的课程里去讲。</p>
+<h2 id="注意分清知识的层次"><a href="#注意分清知识的层次" class="headerlink" title="注意分清知识的层次"></a>注意分清知识的层次</h2><p>就好比造汽车与开汽车的区别，我认为一个司机的技能主要体现在各种道路条件和天气状况下都能安全驾驶（城市道路、高速公路、乡间公路 X 晴、雨、雪、雾），平安到达目的地。作为一名司机，了解汽车运行的基本原理当然是好事，可以有助于更好地驾驶和排除一些常见故障。但不宜喧宾夺主，只要你不真正从事汽车设计工作，你再怎么研究发动机、传动、转向，也不可能比汽车厂的工程师强，毕竟这是人家的全职工作。而且钻研汽车构造超过一定程度之后，对开好车就没多大影响了，成了个人兴趣爱好。“有的人学着学着成了语言专家，反而忘了自己原本是要解决问题来的。”（语出孟岩 <a target="_blank" rel="noopener" href="https://blog.csdn.net/myan/article/details/3144661">快速掌握一个语言最常用的50%</a>）</p>
+<p>对于并发编程来说，掌握 mutex、condition variable 的正确用法，避免误用（例如防止 busy-waiting 和 data race）、避免性能 pitfalls，是一般服务端程序员应该掌握的知识。而如何实现高效的 mutex 则是 libc 和 kernel 开发者应该关心的事，随着硬件的发展（CPU 与内存之间互联方式的改变、核数的增加），最优做法也随之改变。如果你不能持续跟进这一领域的发展，那么你深入钻研之后掌握的知识到了几年之后可能反而成为累赘，当年针对当时硬件的最优特殊做法（好比说定制了自己的 mutex 或 lock-free 数据结构）在几年后有可能反而会拖低性能。还不如按最清晰的方式写代码，利用好语言和库的现成同步设施，让编译器和 libc 的作者去操心“与时俱进”的事。</p>
+<h2 id="注意识别过时的知识"><a href="#注意识别过时的知识" class="headerlink" title="注意识别过时的知识"></a>注意识别过时的知识</h2><p>比方说《操作系统》讲磁盘IO调度往往会讲电梯算法，但是现在的磁盘普遍内置了这一功能（NCQ），无需操作系统操心了。如果你在一个比较好的学校，操作系统课程的老师应该能指出这些知识点，避免学生浪费精力；如果你全靠自学，我也没什么好办法，尽量用新版的书吧。类似的例子还有《计算机体系结构》中可能会讲 RISC CPU 流水线中的 delay slot，现在似乎也都废弃了。《计算机网络》中类似的情况也不少，首先是 OSI 七层模型已经被证明是扯淡的，现在国外流行的教材基本都按五层模型来讲（<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Internet_protocol_suite#Layer_names_and_number_of_layers_in_the_literature">Internet protocol suite</a>），如果你的教材还郑重其事地讲 OSI （还描绘成未来的希望），扔了换一本吧。其次，局域网层面，以太网一家独大（几乎成了局域网的代名词），FDDI&#x2F;Token ring&#x2F;ATM 基本没啥公司在用了。就说以太网，现在也用不到 CSMA&#x2F;CD 机制（因为 10M 的同轴电缆、10M&#x2F;100M 的 hub 都过时了，交换机也早就普及了），因此碰撞检测算法要求“以太网的最小帧长大于最大传播延迟的二倍”这种知识点了解一下就行了。</p>
+<p>另外一点是 low level 优化的知识非常容易过时，编码时要避免过度拟合（overfitting）。比方说目前国内一些教科书（特别是大一第一门编程语言的教程）还在传授“乘除法比加减法慢、浮点数运算比整数运算慢、位运算最快”这种过时的知识。现代通用 CPU 上的实际情况是整数的加减法和乘法运算几乎一样快，整数除法慢很多；浮点数的加减法和乘法运算几乎和整数一样快，浮点数除法慢很多。因此用加减法代替乘法（或用位运算代替算术运算）不见得能提速，反而让代码难懂。而且现代编译器可以把除数为小整数的整数除法转变为乘法来做，无需程序员操心。（目前用浮点数乘法代替浮点数除法似乎还是值得一做的，例如除以10改为乘以0.1，因为浮点运算的特殊性（不满足结合律和分配率），阻止了编译器优化。）</p>
+<p>类似的 low level 优化过时的例子是早年用汇编语言写了某流行图像格式的编解码器，但随着 CPU 微架构的发展，其并不比现代 C 语言（可能用上 SIMD）的版本更快，反而因为使用了 32-bit 汇编语言，导致往 64-bit 移植时出现麻烦。如果不能派人持续维护更新这个私有库，还不如用第三方的库呢。现在能用汇编语言写出比 C 语言更快的代码几乎只有一种可能：使用 CPU 的面向特定算法的新指令，例如 Intel 的新 CPU （将会）内置了 AES、CRC32、SHA1、SHA256 等算法的指令。不过主流的第三方库（例如 OpenSSL）肯定会用上这些手段，及时跟进即可，基本无需自己操刀。（再举一个例子，假如公司早先用汇编语言写了一个非常高效的大整数运算库，一直运转良好，原来写这个库的高人也升职或另谋高就了。Intel 在 2013 年发布了新微架构 Haswell，新增了 MULX 指令，可以进一步提高大整数乘法的效率 <a target="_blank" rel="noopener" href="https://gmplib.org/list-archives/gmp-devel/2013-August/003353.html">GMP on Intel Haswell</a>，那么贵公司是否有人持续跟进这些 CPU 的进化，并及时更新这个大整数运算库呢？或者直接用开源的 GMP 库，让 GMP 的作者去操心这些事情？）</p>
+<h2 id="如果你要记住结论，一定要同时记住前提和适用条件"><a href="#如果你要记住结论，一定要同时记住前提和适用条件" class="headerlink" title="如果你要记住结论，一定要同时记住前提和适用条件"></a>如果你要记住结论，一定要同时记住前提和适用条件</h2><p>在错误的场合使用原本正确的结论的搞笑例子举不胜举。</p>
+<p>1.《Linux内核源码情景分析》上分析内核使用 GDT&#x2F;LDT 表项的状况，得出进程数不超过 4090 的结论。如果你打算记住这个结论，一定要记住这是在 Linux 2.4.0 内核，32-bit Intel x86 平台上成立，新版的内核和其他硬件平台很可能不成立。看完书后千万不要张口就来“书上说 Linux 的最大进程数是 4090”。<br>2.一个 Linux 进程最多创建 300 余个线程，这个结论成立的条件是 3GB 用户空间，线程栈为 10M 或 8M。在 64-bit 下不成立。<br>3.Reactor 模式只能支持不超过 64 个 handle，这个结论成立的条件是 Windows 下使用 WaitForMultipleObjects 函数实现的 WFMO_Reactor，对于 Linux 下使用 poll&#x2F;epoll 实现的 Reactor 则无此限制。<br>4.C++ STL 的 vector 容器在 clear() 之后不会释放内存，需要 swap(empty vector)，这是有意为之（C++11 里增加了 shrink_to_fit() 函数）。不要记成了所有 STL 容器都需要 swap(empty one) 来释放内存，事实上其他容器（map&#x2F;set&#x2F;list&#x2F;deque）都只需要 clear() 就能释放内存。只有含 reserve()&#x2F;capacity() 成员函数的容器才需要用 swap 来释放空间，而 C++ 里只有 vector 和 string 这两个符合条件。</p>
+<p>作者：陈硕<br>链接：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/22608820/answer/21968467">https://www.zhihu.com/question/22608820/answer/21968467</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" rel="tag"># Unix网络编程</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/07/27/Linux%20C++%20%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E8%BF%99%E6%9D%A1%E7%BA%BF%E6%80%8E%E4%B9%88%E8%B5%B0%EF%BC%88%E4%B8%80%EF%BC%89/" rel="prev" title="Linux C++ 服务器端这条线怎么走（一）">
+                  <i class="fa fa-chevron-left"></i> Linux C++ 服务器端这条线怎么走（一）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/08/18/%E7%94%A8%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E5%92%8C%E4%BA%92%E6%96%A5%E9%87%8F%E8%BF%9B%E8%A1%8C%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5/" rel="next" title="用条件变量和互斥量进行线程同步">
+                  用条件变量和互斥量进行线程同步 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen Chris</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
