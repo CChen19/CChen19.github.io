@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
@@ -18,18 +17,18 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="既然你是在校学生，而且编程语言和数据结构的基础还不错，我认为应该在《操作系统》和《计算机体系结构》这两门课上下功夫，然后才去读编程方面的 APUE、UNP 等书。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux C++ 服务器端这条线怎么走（一）">
 <meta property="og:url" content="http://example.com/2022/07/27/Linux%20C++%20%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E8%BF%99%E6%9D%A1%E7%BA%BF%E6%80%8E%E4%B9%88%E8%B5%B0%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
-<meta property="og:site_name" content="陈庆宇">
+<meta property="og:site_name" content="BugNULL">
 <meta property="og:description" content="既然你是在校学生，而且编程语言和数据结构的基础还不错，我认为应该在《操作系统》和《计算机体系结构》这两门课上下功夫，然后才去读编程方面的 APUE、UNP 等书。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-07-27T04:50:31.000Z">
 <meta property="article:modified_time" content="2023-05-11T03:34:08.105Z">
-<meta property="article:author" content="Chen Chris">
+<meta property="article:author" content="Chris Chen">
 <meta property="article:tag" content="Unix网络编程">
 <meta name="twitter:card" content="summary">
 
@@ -41,7 +40,7 @@
 <script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/07/27/Linux%20C++%20%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E8%BF%99%E6%9D%A1%E7%BA%BF%E6%80%8E%E4%B9%88%E8%B5%B0%EF%BC%88%E4%B8%80%EF%BC%89/","path":"2022/07/27/Linux C++ 服务器端这条线怎么走（一）/","title":"Linux C++ 服务器端这条线怎么走（一）"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Linux C++ 服务器端这条线怎么走（一） | 陈庆宇</title>
+<title>Linux C++ 服务器端这条线怎么走（一） | BugNULL</title>
   
 
 
@@ -74,9 +73,10 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <p class="site-title">陈庆宇</p>
+      <p class="site-title">BugNULL</p>
       <i class="logo-line"></i>
     </a>
+      <p class="site-subtitle" itemprop="description">勿在浮沙筑高台</p>
   </div>
 
   <div class="site-nav-right">
@@ -118,8 +118,10 @@
 
         <div class="site-overview-wrap sidebar-panel">
           <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Chen Chris</p>
-  <div class="site-description" itemprop="description">Set the value of description to your description, which can be a sentence you like.</div>
+    <img class="site-author-image" itemprop="image" alt="Chris Chen"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Chris Chen</p>
+  <div class="site-description" itemprop="description">Currently a Software Engineering graduate student at Southwest University(China), planning to apply for MSCS in the U.S.</div>
 </div>
 <div class="site-state-wrap animated">
   <nav class="site-state">
@@ -136,6 +138,14 @@
       </div>
   </nav>
 </div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/CChen19" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;CChen19" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
 
         </div>
       </div>
@@ -161,17 +171,17 @@
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/27/Linux%20C++%20%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E8%BF%99%E6%9D%A1%E7%BA%BF%E6%80%8E%E4%B9%88%E8%B5%B0%EF%BC%88%E4%B8%80%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chen Chris">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Chris Chen">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陈庆宇">
-      <meta itemprop="description" content="Set the value of description to your description, which can be a sentence you like.">
+      <meta itemprop="name" content="BugNULL">
+      <meta itemprop="description" content="Currently a Software Engineering graduate student at Southwest University(China), planning to apply for MSCS in the U.S.">
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Linux C++ 服务器端这条线怎么走（一） | 陈庆宇">
+      <meta itemprop="name" content="Linux C++ 服务器端这条线怎么走（一） | BugNULL">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
@@ -224,6 +234,23 @@
     
 
     <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Chris Chen
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="http://example.com/2022/07/27/Linux%20C++%20%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E8%BF%99%E6%9D%A1%E7%BA%BF%E6%80%8E%E4%B9%88%E8%B5%B0%EF%BC%88%E4%B8%80%EF%BC%89/" title="Linux C++ 服务器端这条线怎么走（一）">http://example.com/2022/07/27/Linux C++ 服务器端这条线怎么走（一）/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
           <div class="post-tags">
               <a href="/tags/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" rel="tag"># Unix网络编程</a>
           </div>
@@ -261,9 +288,9 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Chen Chris</span>
+  <span class="author" itemprop="copyrightHolder">Chris Chen</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>
 
     </div>
